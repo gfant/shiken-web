@@ -3,6 +3,7 @@ import Config from './../config';
 import axios from "axios";
 import { Button, Col, Container, Heading, List, Panel, Row } from "rsuite";
 import SendSolution from "./SendSolution";
+import { useLocation } from "react-router-dom";
 
 interface ProblemContent {
     title: string,
@@ -13,16 +14,23 @@ interface ProblemContent {
 
 const ChosenProblem = () => {
     const [data, setData] = useState<ProblemContent>({} as ProblemContent)
+    const [problemId, setProblemId] = useState<string>("")
+    const location = useLocation();
 
     useEffect(() => {
-        console.log(200)
-        axios
-            .get(Config.SERVER_URL + "/getProblem/1")
-            .then((res) => {
-                console.log(res.data)
-                setData(res.data as ProblemContent)
-            })
-    }, [])
+        if (location) {
+            const parts = location.pathname.split("/");
+            const id = parts[parts.length - 1];
+            setProblemId(id);
+            axios
+                .get(`${Config.SERVER_URL}/getProblem/${id}`)
+                .then((res) => {
+                    console.log(res.data)
+                    setData(res.data as ProblemContent)
+                })
+        }
+    }, [location])
+
     return (
         <>
             {
@@ -35,8 +43,8 @@ const ChosenProblem = () => {
                                     <Row>
                                         {data.statement}
                                     </Row>
-                                    <br/>
-                                    <br/>
+                                    <br />
+                                    <br />
                                     <Row>
                                         <Heading level={6}>Some examples</Heading>
                                         <List>
@@ -51,7 +59,7 @@ const ChosenProblem = () => {
                                     </Row>
                                 </Col>
                             </Panel>
-                            <SendSolution/>
+                            <SendSolution id={problemId} />
                         </Container>
                     </> : <Heading level={1}>An error ocurred, please refresh the page</Heading>
             }
