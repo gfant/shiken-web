@@ -1,0 +1,10 @@
+p {
+    word-wrap: break-word;
+    /* Permite que el texto se envuelva dentro del contenedor */
+}
+
+textarea {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
