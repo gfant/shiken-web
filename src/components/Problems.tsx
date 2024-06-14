@@ -20,7 +20,7 @@ const Problems = () => {
             <Col>
                 {data.map((val, idx) => {
                     return <Row key={val}>
-                        <Link to={`/chosenproblem/${val}`}>
+                        <Link to={`/chosenproblem/${idx+1}`}>
                             <Button>
                                 {val}
                             </Button>
