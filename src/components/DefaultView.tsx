@@ -13,10 +13,10 @@ const DefaultView: React.FC<Content> = ({ component: Component }) => {
                 <div className="col-1">
                     <SidebarView />
                 </div>
-                <div className="col-8">
+                <div className="col-10">
                     <Component />
                 </div>
-                <div className="col-3">
+                <div className="col-1">
                     <div style={{ display: "flex", flexDirection: "column" }}>
                         <Connect />
                     </div>

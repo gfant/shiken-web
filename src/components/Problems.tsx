@@ -16,18 +16,13 @@ const Problems = () => {
     }, [])
     return (
         <>
-            <div className="flex flex-column">
-                <div className="col-offset-3 flex align-items-center justify-content-center h-4rem font-bold border-round bg-secondary">
-                    <h1 className="text-secondary">Problems list</h1>
-                </div>
+
+            <div className="flex align-items-center justify-content-center h-4rem font-bold border-round bg-secondary">
+                <h1 className="text-secondary">Problems list</h1>
             </div>
-            <div className="flex flex-column">
-                {data.map((val, idx) => {
-                    return <Row key={val}>
-                        <ProblemsButton path={`/chosenproblem/${idx + 1}`} header={val}/>
-                    </Row>
-                })}
-            </div>
+            {data.map((val, idx) => {
+                return <ProblemsButton path={`/chosenproblem/${idx + 1}`} header={val} key={idx} />
+            })}
         </>
     );
 };
