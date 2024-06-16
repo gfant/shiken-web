@@ -8,3 +8,8 @@ textarea {
     font-optical-sizing: auto;
     font-style: normal;
 }
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}
