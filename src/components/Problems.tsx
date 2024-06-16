@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Config from './../config';
 import axios from "axios";
-import { Button, Col, Heading, Row } from "rsuite";
-import { Link } from "react-router-dom";
+import { Row } from "rsuite";
+import ProblemsButton from "./Problems/ProblemButton";
 
 const Problems = () => {
     const [data, setData] = useState<string[]>(["No available problems yet"])
@@ -16,18 +16,18 @@ const Problems = () => {
     }, [])
     return (
         <>
-            <Heading level={1}>Problems list</Heading>
-            <Col>
+            <div className="flex flex-column">
+                <div className="col-offset-3 flex align-items-center justify-content-center h-4rem font-bold border-round bg-secondary">
+                    <h1 className="text-secondary">Problems list</h1>
+                </div>
+            </div>
+            <div className="flex flex-column">
                 {data.map((val, idx) => {
                     return <Row key={val}>
-                        <Link to={`/chosenproblem/${idx+1}`}>
-                            <Button>
-                                {val}
-                            </Button>
-                        </Link>
+                        <ProblemsButton path={`/chosenproblem/${idx + 1}`} header={val}/>
                     </Row>
                 })}
-            </Col>
+            </div>
         </>
     );
 };
