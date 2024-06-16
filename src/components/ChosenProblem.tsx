@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Config from './../config';
 import axios from "axios";
-import { Button, Col, Container, Heading, List, Panel, Row } from "rsuite";
+import { Col, Container, Heading, List, Panel, Row } from "rsuite";
 import SendSolution from "./SendSolution";
 import { useLocation } from "react-router-dom";
 
@@ -36,7 +36,7 @@ const ChosenProblem = () => {
             {
                 data.error === null ?
                     <>
-                        <Heading level={1}>{data.title}</Heading>
+                        <h1>{data.title}</h1>
                         <Container>
                             <Panel header="The problem" bordered>
                                 <Col>

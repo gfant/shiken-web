@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Config from './../config';
 import axios from "axios";
-import { Container, IconButton, Input, Tag, Panel, Header, Heading } from "rsuite";
+import { Container, IconButton, Input, Tag, Panel, Heading } from "rsuite";
 import CheckOutlineIcon from '@rsuite/icons/CheckOutline';
 
 interface Output {
