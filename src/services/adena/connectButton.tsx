@@ -36,9 +36,20 @@ const Connect: FC<IConnectProps> = () => {
     return (
         <div>
             {isLoading ?
-                <button onClick={handleWalletConnect}>
-                    CONNECT WALLET
-                </button > :
+                <>
+                    <div className="col-offset-4 col-5" onClick={handleWalletConnect}>
+                        <div className='bg-primary text-primary border-round p-3 hover:bg-white hover:text-purple-500'>
+                            <div className="flex flex-column md:flex-row">
+                                <div className="flex align-items-center p-1 justify-content-center font-bold border-round">
+                                    <i className="pi pi-wallet" />
+                                </div>
+                                <div className="flex align-items-center p-1 justify-content-center font-bold border-round">
+                                    <p>Connect Wallet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </> :
                 <>
                     Current Address: {addr ? addr : ""}
                 </>
