@@ -16,10 +16,12 @@ if (!REACT_APP_REALM_PATH) {
   throw new Error('REACT_APP_REALM_PATH property not found in .env');
 }
 
-export default {
+const output = {
   CHAIN_ID: REACT_APP_CHAIN_ID,
   CHAIN_RPC: REACT_APP_CHAIN_RPC,
   REALM_PATH: REACT_APP_REALM_PATH,
   SERVER_URL: GO_API_READER,
   SERVER_EXEC: GO_API_EXECUTOR,
 };
+
+export default output;
