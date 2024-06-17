@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import Config from './../config';
 import axios from "axios";
-import { Col, Container, Heading, List, Panel, Row } from "rsuite";
 import SendSolution from "./SendSolution";
 import { useLocation } from "react-router-dom";
+
+import { Card } from 'primereact/card';
+import ExampleView from "./ChosenProblem/ExampleView";
 
 interface ProblemContent {
     title: string,
@@ -37,31 +39,21 @@ const ChosenProblem = () => {
                 data.error === null ?
                     <>
                         <h1>{data.title}</h1>
-                        <Container>
-                            <Panel header="The problem" bordered>
-                                <Col>
-                                    <Row>
-                                        {data.statement}
-                                    </Row>
-                                    <br />
-                                    <br />
-                                    <Row>
-                                        <Heading level={6}>Some examples</Heading>
-                                        <List>
-                                            {data.examples.map((item, idx) => {
-                                                return <>
-                                                    <List.Item>
-                                                        {item}
-                                                    </List.Item>
-                                                </>
-                                            })}
-                                        </List>
-                                    </Row>
-                                </Col>
-                            </Panel>
+                        <Card title="The problem" className="bg-white m-2 text-primary-900">
+                            <p>
+                                {data.statement}
+                            </p>
+                        </Card>
+                        <Card title="Examples" className="bg-white m-2 text-primary-900">
+                            {data.examples.map((item, idx) => {
+                                return <>
+                                    <ExampleView content={item} />
+                                </>
+                            })}
+
+                        </Card>
                             <SendSolution id={problemId} />
-                        </Container>
-                    </> : <Heading level={1}>An error ocurred, please refresh the page</Heading>
+                    </> : <h1>An error ocurred, please refresh the page</h1>
             }
         </>
     );

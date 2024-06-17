@@ -1,17 +1,36 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Config from './../config';
 import axios from "axios";
-import { Container, IconButton, Input, Tag, Panel, Heading } from "rsuite";
-import CheckOutlineIcon from '@rsuite/icons/CheckOutline';
+import { InputTextarea } from 'primereact/inputtextarea';
+import { Card } from "primereact/card";
+import SendCodeButton from "./ChosenProblem/SendCodeButton";
+import { Toast } from "primereact/toast";
 
 interface Output {
     output: string,
     error: string,
 }
 
+
+
 const SendSolution = ({ id }: { id: string }) => {
-    const [code, setCode] = useState<string>("")
+    const [code, setCode] = useState<string>('')
     const [response, setResponse] = useState<Output>({} as Output)
+    const toast = useRef<Toast>(null);
+
+
+    const showToast = ({ severity, summary, detail }: { severity: "success" | "info" | "warn" | "error", summary: string, detail: string }) => {
+        toast?.current?.show({ severity: severity, summary: summary, detail: detail, life: 3000 });
+    }
+
+    useEffect(() => {
+        if (response.error !== null) {
+            showToast({ severity: "error", summary: "Error in your code", detail: "Your code didn't pass the tests" })
+        }
+        if (response.error === null && response.output !== "") {
+            showToast({ severity: "success", summary: "Congratulations!", detail: `The response was ${response.output}` })
+        }
+    }, [response])
 
     const RunCode = () => {
         const input = code.replace(/ /g, '\t').replace(/\n/g, '\n');
@@ -31,18 +50,17 @@ const SendSolution = ({ id }: { id: string }) => {
     }
     return (
         <>
-            <Container>
-                <Panel header="Send your solution" bordered>
-                    <Input onChange={val => setCode(val)} as="textarea" rows={20} placeholder="Fancy cool code" />
-                    <IconButton icon={<CheckOutlineIcon />} onClick={() => { RunCode() }}>Send answer</IconButton>
-                </Panel>
-            </Container>
-            <br/>
-            {response.error === null && response.output !== "" ? <Tag color="green"><Heading level={5}>{response.output}</Heading></Tag> :
-                response.output === "" ?     <Tag color="red"><Heading level={5}>Your code didn't pass the tests</Heading></Tag>
-: <></>
-            }
-
+            <Toast ref={toast} />
+            <Card title="Your solution" className="bg-white m-2 text-primary-900">
+                <p>Add your code in the following box</p>
+                <div className="grid">
+                    <div className="col-8 col-offset-3">
+                        <InputTextarea autoResize id="code" value={code} onChange={e => setCode(e.target.value)} rows={12} className="text-white justify-center col-9" />
+                    </div>
+                </div>
+                <div onClick={() => { RunCode() }}><SendCodeButton /></div>
+                <br />
+            </Card>
         </>
     );
 };
