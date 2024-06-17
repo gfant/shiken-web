@@ -10,6 +10,8 @@ import Config from './config';
 import PageHome from './pages/pageHome';
 import PageProblems from './pages/pageProblems';
 import PageChosenProblem from './pages/pageChosenProblem';
+import PageMyAccount from './pages/pageMyAccount';
+import PageLeaderboards from './pages/pageLeaderboards';
 
 import { PrimeReactProvider } from 'primereact/api';
 
@@ -55,6 +57,14 @@ const App = () => {
     {
       path: "/chosenproblem/:problemId",
       element: <PageChosenProblem />,
+    },
+    {
+      path: "/myAccount",
+      element: <PageMyAccount />,
+    },
+    {
+      path: "/leaderboards",
+      element: <PageLeaderboards />,
     },
   ])
 

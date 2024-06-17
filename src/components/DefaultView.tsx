@@ -9,13 +9,13 @@ const DefaultView: React.FC<Content> = ({ component: Component }) => {
     return (
         <>
             <div className="grid bg-secondary-600">
-                <div className="col-1">
+                <div className="col-2">
                     <SidebarView />
                 </div>
-                <div className="col-10">
+                <div className="col-8">
                     <Component />
                 </div>
-                <div className="col-1">
+                <div className="col-2">
                     <div style={{ display: "flex", flexDirection: "column" }}>
                         <Connect />
                     </div>

@@ -16,7 +16,7 @@ export const SidebarView = () => {
                     <LogoView />
                     <SidebarButton path="/" header="Home" icon="pi pi-home" />
                     <SidebarButton path="/problems" header="Problems" icon="pi pi-list-check" />
-                    <SidebarButton path="/leaderboard" header="Leaderboard" icon="pi pi-flag-fill" />
+                    <SidebarButton path="/leaderboards" header="Leaderboard" icon="pi pi-flag-fill" />
                     <SidebarButton path="/myAccount" header="My account" icon="pi pi-user" />
                     <SidebarButton path="https://github.com/iam-agf/shiken-project.git" header="Github" icon="pi pi-github" />
                 </Sidebar >
