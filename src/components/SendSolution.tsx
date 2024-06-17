@@ -15,6 +15,7 @@ interface Output {
 
 const SendSolution = ({ id }: { id: string }) => {
     const [code, setCode] = useState<string>('')
+    const [count, setCount] = useState(0);
     const [response, setResponse] = useState<Output>({} as Output)
     const toast = useRef<Toast>(null);
 
@@ -24,13 +25,15 @@ const SendSolution = ({ id }: { id: string }) => {
     }
 
     useEffect(() => {
-        if (response.error !== null) {
-            showToast({ severity: "error", summary: "Error in your code", detail: "Your code didn't pass the tests" })
+        if (count > 0) {
+            if (response.error !== null) {
+                showToast({ severity: "error", summary: "Error in your code", detail: "Your code didn't pass the tests" })
+            }
+            if (response.error === null && response.output !== "") {
+                showToast({ severity: "success", summary: "Congratulations!", detail: `The response was ${response.output}` })
+            }
         }
-        if (response.error === null && response.output !== "") {
-            showToast({ severity: "success", summary: "Congratulations!", detail: `The response was ${response.output}` })
-        }
-    }, [response])
+    }, [response, count])
 
     const RunCode = () => {
         const input = code.replace(/ /g, '\t').replace(/\n/g, '\n');
@@ -46,6 +49,7 @@ const SendSolution = ({ id }: { id: string }) => {
             .then((res) => {
                 console.log(res.data)
                 setResponse(res.data as Output)
+                setCount(prev => prev + 1)
             })
     }
     return (
