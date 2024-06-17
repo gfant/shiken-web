@@ -1,6 +1,5 @@
 import SidebarView from "./Sidebar/Sidebar";
 import Connect from "../services/adena/connectButton";
-import 'rsuite/FlexboxGrid/styles/index.css';
 
 interface Content {
     component: React.ComponentType;

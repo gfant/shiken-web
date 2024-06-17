@@ -22,7 +22,7 @@ export const SidebarView = () => {
                 </Sidebar >
 
                 { /* Button */}
-                <div className="col-offset-1 col-10" onClick={() => setVisible(true)}>
+                <div className="col-12" onClick={() => setVisible(true)}>
                     <SidebarButton path="" header="Menu" icon="pi pi-align-justify" />
                 </div>
             </div >
