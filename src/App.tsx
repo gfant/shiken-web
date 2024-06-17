@@ -13,7 +13,6 @@ import PageChosenProblem from './pages/pageChosenProblem';
 
 import { PrimeReactProvider } from 'primereact/api';
 
-import 'rsuite/dist/rsuite.min.css';
 import "./style.css"
 import 'primereact/resources/themes/vela-purple/theme.css';// theme
 import 'primereact/resources/primereact.css'; // core css

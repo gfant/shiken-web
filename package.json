@@ -29,7 +29,6 @@
     "react-router-dom": "^6.23.0",
     "react-scripts": "5.0.1",
     "rewire": "^6.0.0",
-    "rsuite": "^5.60.0",
     "sass": "^1.75.0",
     "stream": "npm:stream-browserify",
     "stream-browserify": "^3.0.0",
