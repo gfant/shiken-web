@@ -11,10 +11,10 @@ export const parseResponse = (response: string): string => {
 export const parseJSONResponse = (response: string): string => {
     let left = 0
     let right = response.length
-    while (0 < right && response[right] !== "\"") right -= 1
-    while (left < response.length && response[left] !== "{") left += 1
+    while (right > 0 && response[right - 1] !== '}') right -= 1;
+    while (left < response.length && response[left] !== '{') left += 1
     response = response.substring(left, right);
-    const content = response.replace(/\\/g, "");
+    const content = response.replace(/\\\\/g, "\\").replace(/\\"/g, '"');
     return content
 }
 
