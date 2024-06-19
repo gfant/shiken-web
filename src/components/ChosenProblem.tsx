@@ -1,59 +1,75 @@
-import { useEffect, useState } from "react";
-import Config from './../config';
-import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import SendSolution from "./SendSolution";
 import { useLocation } from "react-router-dom";
 
 import { Card } from 'primereact/card';
 import ExampleView from "./ChosenProblem/ExampleView";
+import ProviderContext from "../context/ProviderContext";
+import { parseJSONResponse } from "../pieces/supportFuns";
 
 interface ProblemContent {
-    title: string,
-    statement: string,
-    examples: string[],
-    error: string,
+    Title: string,
+    Statement: string,
+    Examples: string[],
+    Error: string,
 }
 
 const ChosenProblem = () => {
-    const [data, setData] = useState<ProblemContent>({} as ProblemContent)
     const [problemId, setProblemId] = useState<string>("")
     const location = useLocation();
 
+    const { provider } = useContext(ProviderContext);
+    const [problem, setProblem] = useState<ProblemContent>({
+        Title: "",
+        Statement: "",
+        Examples: [],
+        Error: "",
+    });
+
+    // Gets the problem Id
     useEffect(() => {
         if (location) {
             const parts = location.pathname.split("/");
             const id = parts[parts.length - 1];
             setProblemId(id);
-            axios
-                .get(`${Config.SERVER_URL}/getProblem/${id}`)
-                .then((res) => {
-                    console.log(res.data)
-                    setData(res.data as ProblemContent)
-                })
         }
     }, [location])
+
+    // Gets the problem data to show
+    useEffect(() => {
+        if (provider !== null) {
+            const fetchData = async () => {
+                provider.evaluateExpression('gno.land/r/dev/shiken', `RenderProblem(${problemId})`)
+                    .then((response: any) => parseJSONResponse(response))
+                    .then((response: string) => JSON.parse(response) as ProblemContent)
+                    .then((response: ProblemContent) => setProblem(response as ProblemContent))
+                    .catch((error: any) => console.log(error));
+            };
+            fetchData();
+        }
+    }, [problemId, provider])
 
     return (
         <>
             {
-                data.error === null ?
+                problem.Title !== "" ?
                     <>
-                        <h1>{data.title}</h1>
+                        <h1>{problem.Title}</h1>
                         <Card title="The problem" className="bg-white m-2 text-primary-900">
                             <p>
-                                {data.statement}
+                                {problem.Statement}
                             </p>
                         </Card>
                         <Card title="Examples" className="bg-white m-2 text-primary-900">
-                            {data.examples.map((item, idx) => {
+                            {problem.Examples.map((item, idx) => {
                                 return <>
-                                    <ExampleView content={item} />
+                                    <ExampleView content={item} key={idx} />
                                 </>
                             })}
 
                         </Card>
-                            <SendSolution id={problemId} />
-                    </> : <h1>An error ocurred, please refresh the page</h1>
+                        <SendSolution id={problemId} />
+                    </> : <h1>Waiting response from chain...</h1>
             }
         </>
     );
