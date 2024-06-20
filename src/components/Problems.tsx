@@ -41,7 +41,7 @@ const Problems = () => {
                 <h1 className="text-secondary">Problems list</h1>
             </div>
             {Object.keys(Problems).length > 0 ? Object.entries(Problems).map(([key, problem]) => {
-                return <ProblemsButton path={`/chosenproblem/${key}`} header={`Problem ${key}: ${problem.Title}`} key={key} />
+                return <ProblemsButton path={`/problem/${key}`} header={`Problem ${key}: ${problem.Title}`} key={key} />
             }) : <ProblemsButton path={"/"} header={nothing} key={0} />}
         </>
     );

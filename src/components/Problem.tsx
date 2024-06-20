@@ -3,7 +3,7 @@ import SendSolution from "./SendSolution";
 import { useLocation } from "react-router-dom";
 
 import { Card } from 'primereact/card';
-import ExampleView from "./ChosenProblem/ExampleView";
+import ExampleView from "./Problem/ExampleView";
 import ProviderContext from "../context/ProviderContext";
 import { parseJSONResponse } from "../pieces/supportFuns";
 
@@ -14,7 +14,7 @@ interface ProblemContent {
     Error: string,
 }
 
-const ChosenProblem = () => {
+const Problem = () => {
     const [problemId, setProblemId] = useState<string>("")
     const location = useLocation();
 
@@ -62,9 +62,9 @@ const ChosenProblem = () => {
                         </Card>
                         <Card title="Examples" className="bg-white m-2 text-primary-900">
                             {problem.Examples.map((item, idx) => {
-                                return <>
+                                return <div key={idx}>
                                     <ExampleView content={item} key={idx} />
-                                </>
+                                </div>
                             })}
 
                         </Card>
@@ -75,4 +75,4 @@ const ChosenProblem = () => {
     );
 };
 
-export default ChosenProblem;
+export default Problem;

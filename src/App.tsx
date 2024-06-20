@@ -9,7 +9,7 @@ import Config from './config';
 
 import PageHome from './pages/pageHome';
 import PageProblems from './pages/pageProblems';
-import PageChosenProblem from './pages/pageChosenProblem';
+import PageProblem from './pages/pageProblem';
 import PageMyAccount from './pages/pageMyAccount';
 import PageLeaderboards from './pages/pageLeaderboards';
 
@@ -55,8 +55,8 @@ const App = () => {
       element: <PageProblems />,
     },
     {
-      path: "/chosenproblem/:problemId",
-      element: <PageChosenProblem />,
+      path: "/problem/:problemId",
+      element: <PageProblem />,
     },
     {
       path: "/myAccount",

@@ -3,7 +3,7 @@ import Config from './../config';
 import axios from "axios";
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Card } from "primereact/card";
-import SendCodeButton from "./ChosenProblem/SendCodeButton";
+import SendCodeButton from "./Problem/SendCodeButton";
 import { Toast } from "primereact/toast";
 
 interface Output {
@@ -59,7 +59,7 @@ const SendSolution = ({ id }: { id: string }) => {
                 <p>Add your code in the following box</p>
                 <div className="grid">
                     <div className="col-8 col-offset-3">
-                        <InputTextarea autoResize id="code" value={code} onChange={e => setCode(e.target.value)} rows={12} className="text-white justify-center col-9" />
+                        <InputTextarea autoResize id="code" value={code} onChange={e => setCode(e.target.value)} cols={60} rows={12} className="text-white justify-center col-9" />
                     </div>
                 </div>
                 <div onClick={() => { RunCode() }}><SendCodeButton /></div>
