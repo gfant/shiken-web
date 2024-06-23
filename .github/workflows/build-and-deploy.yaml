@@ -1,0 +1,55 @@
+---
+name: release website
+on:
+  push:
+    branches: [realm]
+jobs:
+  build-and-release:
+    name: Build App and release
+    runs-on: ubuntu-latest
+    env:
+      BUCKET: shikengno.xyz
+      DIST: build
+      REGION: us-east-1
+      DIST_ID: E2QCBQ7SURRYU8
+      REPO_COSMJS: https://github.com/cosmos/cosmjs.git
+      REPO_TM2_JS_CLIENT: https://github.com/gnolang/tm2-js-client.git
+
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.REGION }}
+    
+    - name: Install dependencies
+      run: |
+        node --version
+        npm ci --production
+    
+    - name: Add missing ts in dependencies
+      run: | 
+        git clone ${{REPO_COSMJS}}
+        for p in $(PACKAGES_COSMJS); do \
+	          echo "	Adding $(NODEPATH)/@$(FOLDER_REPO_COSMJS)/$$p"; \
+		        cp -r $(FOLDER_REPO_COSMJS)/packages/$$p/src $(NODEPATH)/$(FOLDER_COSMJS)/$$p; \
+	      done
+        rm -rf ${{FOLDER_REPO_COSMJS}}
+        rm -rf ${{FOLDER_REPO_COSMJS}}
+    - name: Build website
+      run: npm build
+
+    - name: Delete old files to AWS
+      run: |
+        aws s3 sync --delete ${{ env.DIST_ID }} s3://${{ env.BUCKET }}
+
+    - name: Adding updated files to AWS
+      run: |
+        aws cloudfront create-invalidation \
+          --distribution-id ${{ env.DIST_ID }} \
+          --paths "/*"
