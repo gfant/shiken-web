@@ -11,7 +11,6 @@ jobs:
       BUCKET: shikengno.xyz
       DIST: build
       REGION: us-east-1
-      DIST_ID: E2QCBQ7SURRYU8
       REPO_COSMJS: https://github.com/cosmos/cosmjs.git
 
     steps:
@@ -31,14 +30,21 @@ jobs:
         npm ci --production
         
     - name: Build website
-      run: npm run build
+      run: |
+        ls
+        git clone ${{ env.REPO_COSMJS }}
+        for p in amino crypto encoding ledger-amino math utils
+          do
+            echo "  > Fixing issues in $p"
+            cp -r cosmjs/packages/$p/src node_modules/@cosmjs/$p
+          done
+        npm run build
 
     - name: Delete old files to AWS
       run: |
-        aws s3 sync --delete ${{ env.DIST_ID }} s3://${{ env.BUCKET }}
+        aws s3 ls s3://${{ env.BUCKET }}
+        aws s3 rm --recursive s3://${{ env.BUCKET }}/
 
-    - name: Adding updated files to AWS
+    - name: Add new files to AWS
       run: |
-        aws cloudfront create-invalidation \
-          --distribution-id ${{ env.DIST_ID }} \
-          --paths "/*"
+        aws s3  sync build/ s3://${{ env.BUCKET }}/ --delete
