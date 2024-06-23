@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import Config from './../config';
 import ProblemsButton from "./Problems/ProblemButton";
 import ProviderContext from "../context/ProviderContext";
-import AccountContext from "../context/AccountContext";
 import { parseJSONResponse } from "../pieces/supportFuns";
 
 interface StructuredData {
