@@ -34,10 +34,11 @@ jobs:
     - name: Add missing ts in dependencies
       run: | 
         git clone ${{REPO_COSMJS}}
-        for p in amino crypto encoding ledger-amino math utils; do \
-	          echo "	Adding node_modules/@cosmjs/$p"; \
-		        cp -r cosmjs/packages/$p/src node_modules/cosmjs/$p; \
-	      done
+        for p in amino crypto encoding ledger-amino math utils
+            do
+	            echo "	Adding node_modules/@cosmjs/$p"
+		          cp -r cosmjs/packages/$p/src node_modules/cosmjs/$p
+	          done
         rm -rf cosmjs
     - name: Build website
       run: npm build
