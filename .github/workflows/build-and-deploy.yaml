@@ -15,7 +15,6 @@ jobs:
       REPO_COSMJS: https://github.com/cosmos/cosmjs.git
       REPO_TM2_JS_CLIENT: https://github.com/gnolang/tm2-js-client.git
 
-
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -35,12 +34,11 @@ jobs:
     - name: Add missing ts in dependencies
       run: | 
         git clone ${{REPO_COSMJS}}
-        for p in $(PACKAGES_COSMJS); do \
-	          echo "	Adding $(NODEPATH)/@$(FOLDER_REPO_COSMJS)/$$p"; \
-		        cp -r $(FOLDER_REPO_COSMJS)/packages/$$p/src $(NODEPATH)/$(FOLDER_COSMJS)/$$p; \
+        for p in amino crypto encoding ledger-amino math utils; do \
+	          echo "	Adding node_modules/@cosmjs/$p"; \
+		        cp -r cosmjs/packages/$p/src node_modules/cosmjs/$p; \
 	      done
-        rm -rf ${{FOLDER_REPO_COSMJS}}
-        rm -rf ${{FOLDER_REPO_COSMJS}}
+        rm -rf cosmjs
     - name: Build website
       run: npm build
 
