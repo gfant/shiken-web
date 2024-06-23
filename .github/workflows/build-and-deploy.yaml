@@ -13,7 +13,6 @@ jobs:
       REGION: us-east-1
       DIST_ID: E2QCBQ7SURRYU8
       REPO_COSMJS: https://github.com/cosmos/cosmjs.git
-      REPO_TM2_JS_CLIENT: https://github.com/gnolang/tm2-js-client.git
 
     steps:
     - name: Checkout
@@ -30,15 +29,15 @@ jobs:
       run: |
         node --version
         npm ci --production
-    
+
     - name: Add missing ts in dependencies
-      run: | 
+      run:  |
         git clone ${{REPO_COSMJS}}
         for p in amino crypto encoding ledger-amino math utils
-            do
-	            echo "	Adding node_modules/@cosmjs/$p"
-		          cp -r cosmjs/packages/$p/src node_modules/cosmjs/$p
-	          done
+          do
+            echo "    Adding node_modules/@cosmjs/$p"
+            cp -r cosmjs/packages/$p/src node_modules/cosmjs/$p
+          done
         rm -rf cosmjs
     - name: Build website
       run: npm build
