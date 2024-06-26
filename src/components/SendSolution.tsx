@@ -38,12 +38,15 @@ const SendSolution = ({ id }: { id: string }) => {
     const RunCode = () => {
         const input = code.replace(/ /g, '\t').replace(/\n/g, '\n');
         axios
-            .post(Config.SERVER_EXEC + "/runCode", {
+            .post(Config.SERVER_EXEC + "/run", {
                 id: id,
                 code: input,
             }, {
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Access-Control-Allow-Headers": "Content-Type",
+                    'Access-Control-Allow-Origin':"*",
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Methods": "POST"
                 }
             })
             .then((res) => {
