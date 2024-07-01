@@ -1,7 +1,7 @@
 const REACT_APP_CHAIN_ID = process.env.REACT_APP_CHAIN_ID
 const REACT_APP_CHAIN_RPC = process.env.REACT_APP_CHAIN_RPC
 const REACT_APP_REALM_PATH = process.env.REACT_APP_REALM_PATH
-const GO_API_EXECUTOR = "http://localhost:80"
+const GO_API_EXECUTOR = "https://shikenapi.v0tq0dil0ho1o.us-east-1.cs.amazonlightsail.com"
 
 if (!REACT_APP_CHAIN_ID) {
   throw new Error('REACT_APP_CHAIN_ID property not found in .env');

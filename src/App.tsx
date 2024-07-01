@@ -18,6 +18,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import "./style.css"
 import 'primereact/resources/themes/vela-purple/theme.css';// theme
 import 'primereact/resources/primereact.css'; // core css
+import PageProblemLeaderboard from './pages/pageProblemLeaderboard';
 
 const App = () => {
   const [address, setAddress] = useState<string | null>(null);
@@ -65,6 +66,10 @@ const App = () => {
     {
       path: "/leaderboards",
       element: <PageLeaderboards />,
+    },
+    {
+      path: "/leaderboard/:problemId",
+      element: <PageProblemLeaderboard />,
     },
   ])
 

@@ -1,11 +1,10 @@
 import DefaultView from "../components/DefaultView";
+import Leaderboards from "../components/Leaderboards";
 
 const PageLeaderboards = () => {
     return (
-        <DefaultView component={TmpLeaderboards}/>
+        <DefaultView component={Leaderboards}/>
     );
 };
-
-const TmpLeaderboards = () => {return (<h1>Leaderboards</h1>);};
 
 export default PageLeaderboards;
