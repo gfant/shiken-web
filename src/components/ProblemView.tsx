@@ -6,24 +6,18 @@ import { Card } from 'primereact/card';
 import ExampleView from "./Problem/ExampleView";
 import ProviderContext from "../context/ProviderContext";
 import { parseJSONResponse } from "../pieces/supportFuns";
+import { Problem } from "../pieces/Realm.types";
 
-interface ProblemContent {
-    Title: string,
-    Statement: string,
-    Examples: string[],
-    Error: string,
-}
 
-const Problem = () => {
+const ProblemView = () => {
     const [problemId, setProblemId] = useState<string>("")
     const location = useLocation();
 
     const { provider } = useContext(ProviderContext);
-    const [problem, setProblem] = useState<ProblemContent>({
+    const [problem, setProblem] = useState<Problem>({
         Title: "",
         Statement: "",
         Examples: [],
-        Error: "",
     });
 
     // Gets the problem Id
@@ -41,8 +35,8 @@ const Problem = () => {
             const fetchData = async () => {
                 provider.evaluateExpression('gno.land/r/dev/shiken', `RenderProblem(${problemId})`)
                     .then((response: any) => parseJSONResponse(response))
-                    .then((response: string) => JSON.parse(response) as ProblemContent)
-                    .then((response: ProblemContent) => setProblem(response as ProblemContent))
+                    .then((response: string) => JSON.parse(response) as Problem)
+                    .then((response: Problem) => setProblem(response as Problem))
                     .catch((error: any) => console.log(error));
             };
             fetchData();
@@ -75,4 +69,4 @@ const Problem = () => {
     );
 };
 
-export default Problem;
+export default ProblemView;

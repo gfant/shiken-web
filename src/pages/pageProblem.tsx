@@ -1,9 +1,9 @@
 import DefaultView from "../components/DefaultView";
-import Problem from "../components/Problem";
+import ProblemView from "../components/ProblemView";
 
 const PageProblem = () => {
     return (
-        <DefaultView component={Problem}/>
+        <DefaultView component={ProblemView}/>
     );
 };
 

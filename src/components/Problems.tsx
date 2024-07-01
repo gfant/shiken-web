@@ -2,17 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import ProblemsButton from "./Problems/ProblemButton";
 import ProviderContext from "../context/ProviderContext";
 import { parseJSONResponse } from "../pieces/supportFuns";
-
-interface StructuredData {
-    [key: number]: Problem;
-}
-
-interface Problem {
-    Title: string;
-    Statement: string;
-    Examples: string[];
-
-}
+import { StructuredData } from "../pieces/Realm.types";
 
 const Problems = () => {
     const nothing = "No available problems yet";
