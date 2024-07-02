@@ -52,7 +52,7 @@ const SendSolution = ({ id }: { id: string }) => {
             const sendMsg: MsgSend = {
                 from_address: address,
                 to_address: "g1jg8mtutu9khhfwc4nxmuhcpftf0pajdhfvsqf5",
-                amount: "100000 ugnot",
+                amount: "10000000ugnot",
             };
 
             const getTx = await AdenaService.sendTransaction(
@@ -64,7 +64,7 @@ const SendSolution = ({ id }: { id: string }) => {
                 ],
                 5000000
             );
-            setHash(getTx.hash)
+            setHash(getTx.hash);
         } catch (e) {
             console.error(e);
 
