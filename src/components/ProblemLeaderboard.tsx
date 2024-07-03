@@ -3,7 +3,6 @@ import ProviderContext from "../context/ProviderContext";
 import { parseJSONResponse } from "../pieces/supportFuns";
 import { useLocation } from "react-router-dom";
 import { ProblemLeaderboardData, ScoreData } from "../pieces/Realm.types";
-import ScoreView from "./Problem/ScoreView";
 import { TreeTable } from "primereact/treetable";
 import { Column } from "primereact/column";
 import { TreeNode } from "primereact/treenode";
