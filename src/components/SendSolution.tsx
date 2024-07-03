@@ -25,26 +25,21 @@ const SendSolution = ({ id }: { id: string }) => {
     const [response, setResponse] = useState<Output>({} as Output)
     const toast = useRef<Toast>(null);
 
-
     const showToast = ({ severity, summary, detail }: { severity: "success" | "info" | "warn" | "error", summary: string, detail: string }) => {
         toast?.current?.show({ severity: severity, summary: summary, detail: detail, life: 3000 });
     }
 
     useEffect(() => {
         if (count > 0) {
-            if (response.error !== null) {
-                showToast({ severity: "error", summary: "Error in your code", detail: "Your code didn't pass the tests" })
-            }
-            if (response.error === null && response.output !== "") {
-                showToast({ severity: "success", summary: "Congratulations!", detail: `The response was ${response.output}` })
-            }
+            if (response.error !== null) { showToast({ severity: "error", summary: "Error in your code", detail: "Your code didn't pass the tests" }) }
+            if (response.error === null && response.output !== "") { showToast({ severity: "success", summary: "Congratulations!", detail: `The response was ${response.output}` }) }
         }
     }, [response, count])
 
     const SendCrypto = async () => {
         if (address === "" || address === null) {
             // Wallet not connected
-            showToast({ severity: "error", summary: "Connect your wallet", detail: "" })
+            showToast({ severity: "error", summary: "Connect your wallet", detail: "" });
             return;
         }
 
@@ -64,6 +59,7 @@ const SendSolution = ({ id }: { id: string }) => {
                 ],
                 5000000
             );
+            console.log(getTx)
             setHash(getTx.hash);
         } catch (e) {
             console.error(e);
@@ -74,17 +70,11 @@ const SendSolution = ({ id }: { id: string }) => {
 
     const RunCode = () => {
         const input = code.replace(/ /g, '\t').replace(/\n/g, '\n');
-        axios
-            .post(Config.SERVER_EXEC + "/run", {
+        axios.post(Config.SERVER_EXEC + "/run", {
                 id: id,
                 code: input,
-            }, {
-                headers: {
-                    "Access-Control-Allow-Headers": "Content-Type",
-                    'Access-Control-Allow-Origin': "*",
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Methods": "POST, OPTIONS, GET, PUT"
-                }
+                address: address,
+                hash: hash,
             })
             .then((res) => {
                 console.log(res.data)
