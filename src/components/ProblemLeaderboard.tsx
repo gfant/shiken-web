@@ -3,13 +3,10 @@ import ProviderContext from "../context/ProviderContext";
 import { parseJSONResponse } from "../pieces/supportFuns";
 import { useLocation } from "react-router-dom";
 import { ProblemLeaderboardData, ScoreData } from "../pieces/Realm.types";
-import { TreeTable } from "primereact/treetable";
-import { Column } from "primereact/column";
-import { TreeNode } from "primereact/treenode";
+import { Skeleton } from "primereact/skeleton";
 
 const ProblemLeaderboard = () => {
     const [problemId, setProblemId] = useState<string>("")
-    const [nodes, setNodes] = useState<TreeNode[]>([]);
 
     const [problemLeaderBoard, setProblemLeaderBoard] = useState<ProblemLeaderboardData>({
         problem: {
@@ -17,9 +14,9 @@ const ProblemLeaderboard = () => {
             Statement: "",
             Examples: [],
         },
-        scores: {} as ScoreData
-    }
-    )
+        scores: {} as ScoreData,
+    });
+
     const location = useLocation();
     const { provider } = useContext(ProviderContext);
 
@@ -46,16 +43,8 @@ const ProblemLeaderboard = () => {
                     );
                     const jsonResponse = await parseJSONResponse(response);
                     const leaderboardData = JSON.parse(jsonResponse) as ProblemLeaderboardData;
+                    console.log(leaderboardData)
                     setProblemLeaderBoard(leaderboardData);
-
-                    // Actualizar nodes basado en scores
-                    const newNodes: TreeNode[] = Object.entries(leaderboardData.scores).map(
-                        ([addressApplicant, score]) => {
-                            let scoring: ScoreData = typeof score === "object" && score !== null ? score : {};
-                            return { data: { Address: addressApplicant, Score: scoring.Score } };
-                        }
-                    );
-                    setNodes(newNodes);
                 } catch (error) {
                     console.error("Error fetching data:", error);
                 }
@@ -66,15 +55,45 @@ const ProblemLeaderboard = () => {
 
     return (
         <>
-            <h1>{problemLeaderBoard.problem?.Title !== "" ? <>{problemLeaderBoard.problem?.Title}</> : <>Fetching data</>}</h1>
+            <h1 className="pb-6">
+                {problemLeaderBoard.problem?.Title !== "" ? (
+                    <>Leaderboard for {problemLeaderBoard.problem?.Title}</>
+                ) : (
+                    <div className="border-round-xl">
+                        <Skeleton width="100rem" height="4rem" />
+                    </div>
+                )}
+            </h1>
             {Object.keys(problemLeaderBoard.scores).length > 0 ?
-                (nodes.length > 0 ? <TreeTable value={nodes} tableStyle={{ minWidth: '50rem' }}>
-                    <Column field="Address" header="Address" filter filterPlaceholder="Filter by Address"></Column>
-                    <Column field="Score" header="Score" filter filterPlaceholder="Filter by Score"></Column>
-                </TreeTable> : <></>) : <>No one has tried this problem yet!</>
-            }
+                <>
+                    <div className="flex flex-row justify-content-between w-full p-2">
+                        <div className="font-bold text-lg px-4 py-2">
+                            Address
+                        </div>
+                        <div className="font-bold text-lg px-4 py-2">
+                            Score
+                        </div>
+                    </div>
+                    {
+                        Object.entries(problemLeaderBoard.scores).map(([key, score], index) => (
+
+                            <div className={`flex flex-row justify-content-between w-full ${index % 2 === 0 ? 'bg-primary-500' : 'bg-primary-700'} p-2`} key={key}>
+                                <div className="px-4 py-2">
+                                    {key}
+                                </div>
+                                <div className="px-4 py-2">
+                                    {score.Score}
+                                </div>
+                            </div>
+                        ))
+                    }
+                </> : (
+                    <div className="bg-black-alpha-10 border-round-xl">
+                        <Skeleton width="100rem" height="18rem" />
+                    </div>
+                )}
         </>
     );
-};;
+};
 
 export default ProblemLeaderboard;

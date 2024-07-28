@@ -31,10 +31,16 @@ export interface StructuredData {
 }
 
 export interface ScoreData {
-  [key: string]: string; // address -> score
+  [key: string]: ScoreUser; // address -> score
 }
 
-export interface ProblemLeaderboardData{
+export interface ScoreUser {
+  ProblemId: string,
+  Score: string,
+  Tests: string,
+}
+
+export interface ProblemLeaderboardData {
   scores: ScoreData;
   problem: Problem
 }
