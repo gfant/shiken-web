@@ -23,14 +23,17 @@ import PageProblemLeaderboard from './pages/pageProblemLeaderboard';
 const App = () => {
   const [address, setAddress] = useState<string | null>(null);
   const [chainID, setChainID] = useState<string | null>(null);
+  const [coins, setCoins] = useState<string | null>(null);
 
   // Only God knows
   const accountContext: IAccountContext = {
     address,
     chainID,
+    coins,
 
     setAddress,
-    setChainID
+    setChainID,
+    setCoins,
   };
 
   // Provides the websocket required to connect to chain

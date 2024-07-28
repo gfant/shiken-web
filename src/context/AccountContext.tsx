@@ -4,8 +4,10 @@ import { IAccountContext } from './accountContext.types';
 const AccountContext = createContext<IAccountContext>({
   address: '',
   chainID: '',
-  setAddress: () => {},
-  setChainID: () => {}
+  coins: '',
+  setAddress: () => { },
+  setChainID: () => { },
+  setCoins: () => { },
 });
 
 export default AccountContext;
