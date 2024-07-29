@@ -1,11 +1,11 @@
 import DefaultView from "../components/DefaultView";
+import MyAccount from "../components/MyAccount";
 
 const PageMyAccount = () => {
     return (
-        <DefaultView component={TmpMyAccount}/>
+        <DefaultView component={MyAccount}/>
     );
 };
 
-const TmpMyAccount = () => {return (<h1>My Account</h1>);};
 
 export default PageMyAccount;

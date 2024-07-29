@@ -14,6 +14,7 @@
     "assert": "^2.0.0",
     "axios": "^1.6.8",
     "buffer": "^6.0.3",
+    "chart.js": "^4.4.3",
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
     "framer-motion": "^11.1.7",
