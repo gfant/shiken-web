@@ -14,7 +14,6 @@ const Connect: FC<IConnectProps> = () => {
             await AdenaService.establishConnection("");
             await AdenaService.switchNetwork(Config.CHAIN_ID);
             const info: IAccountInfo = await AdenaService.getAccountInfo();
-            console.log(info);
 
             setAddress(info.address);
             setChainID(Config.CHAIN_ID);

@@ -4,6 +4,7 @@ import { parseJSONResponse } from "../pieces/supportFuns";
 import { useLocation } from "react-router-dom";
 import { ProblemLeaderboardData, ScoreData } from "../pieces/Realm.types";
 import { Skeleton } from "primereact/skeleton";
+import AddressFinder from "./LeaderboardFinder";
 
 const ProblemLeaderboard = () => {
     const [problemId, setProblemId] = useState<string>("")
@@ -43,7 +44,6 @@ const ProblemLeaderboard = () => {
                     );
                     const jsonResponse = await parseJSONResponse(response);
                     const leaderboardData = JSON.parse(jsonResponse) as ProblemLeaderboardData;
-                    console.log(leaderboardData)
                     setProblemLeaderBoard(leaderboardData);
                 } catch (error) {
                     console.error("Error fetching data:", error);
@@ -66,6 +66,7 @@ const ProblemLeaderboard = () => {
             </h1>
             {Object.keys(problemLeaderBoard.scores).length > 0 ?
                 <>
+                    <AddressFinder scores={problemLeaderBoard.scores!} />
                     <div className="flex flex-row justify-content-between w-full p-2">
                         <div className="font-bold text-lg px-4 py-2">
                             Address
@@ -77,7 +78,11 @@ const ProblemLeaderboard = () => {
                     {
                         Object.entries(problemLeaderBoard.scores).map(([key, score], index) => (
 
-                            <div className={`flex flex-row justify-content-between w-full ${index % 2 === 0 ? 'bg-primary-500' : 'bg-primary-700'} p-2`} key={key}>
+                            <div className={`flex flex-row justify-content-between w-full 
+                            ${index % 2 === 0 ? 'bg-primary-500' : 'bg-primary-700'} 
+                            text-white
+                            font-bold
+                            p-2`} key={key}>
                                 <div className="px-4 py-2">
                                     {key}
                                 </div>
