@@ -14,7 +14,7 @@ export const parseJSONResponse = (response: string): string => {
     while (right > 0 && response[right - 1] !== '}') right -= 1;
     while (left < response.length && response[left] !== '{') left += 1
     response = response.substring(left, right);
-    const content = response.replace(/\\\\/g, "\\").replace(/\\"/g, '"');
+    const content = response.replace(/\\\\/g, "\\").replace(/\\"/g, '"').replace(/\r\n/g, " ").replace(/\t"/g, '"');
     return content
 }
 

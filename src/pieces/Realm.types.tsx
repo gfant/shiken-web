@@ -34,13 +34,17 @@ export interface ScoreData {
   [key: string]: ScoreUser; // address -> score
 }
 
+export interface ScoreContainer {
+  [key: string]: ScoreData; // address -> score
+}
+
 export interface ScoreUser {
-  ProblemId: string,
+  Address: string,
   Score: string,
   Tests: string,
 }
 
 export interface ProblemLeaderboardData {
-  scores: ScoreData;
+  scores: ScoreData[];
   problem: Problem
 }

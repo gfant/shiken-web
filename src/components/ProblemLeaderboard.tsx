@@ -8,6 +8,7 @@ import AddressFinder from "./LeaderboardFinder";
 
 const ProblemLeaderboard = () => {
     const [problemId, setProblemId] = useState<string>("")
+    const [callFunc, setCallFunc] = useState<boolean>(false)
 
     const [problemLeaderBoard, setProblemLeaderBoard] = useState<ProblemLeaderboardData>({
         problem: {
@@ -15,7 +16,7 @@ const ProblemLeaderboard = () => {
             Statement: "",
             Examples: [],
         },
-        scores: {} as ScoreData,
+        scores: [] as ScoreData[],
     });
 
     const location = useLocation();
@@ -28,6 +29,7 @@ const ProblemLeaderboard = () => {
                 const parts = location.pathname.split("/");
                 const id = parts[parts.length - 1];
                 setProblemId(id);
+                setCallFunc(true);
             }
             getProblemId();
         }
@@ -56,7 +58,7 @@ const ProblemLeaderboard = () => {
     return (
         <>
             <h1 className="pb-6">
-                {problemLeaderBoard.problem?.Title !== "" ? (
+                {callFunc && problemLeaderBoard.problem?.Title !== "" ? (
                     <>Leaderboard for {problemLeaderBoard.problem?.Title}</>
                 ) : (
                     <div className="border-round-xl">
@@ -64,9 +66,9 @@ const ProblemLeaderboard = () => {
                     </div>
                 )}
             </h1>
-            {Object.keys(problemLeaderBoard.scores).length > 0 ?
+            {callFunc && problemLeaderBoard.scores.length !== 0 ?
                 <>
-                    <AddressFinder scores={problemLeaderBoard.scores!} />
+                    <AddressFinder scores={problemLeaderBoard.scores![0]} />
                     <div className="flex flex-row justify-content-between w-full p-2">
                         <div className="font-bold text-lg px-4 py-2">
                             Address
@@ -76,7 +78,7 @@ const ProblemLeaderboard = () => {
                         </div>
                     </div>
                     {
-                        Object.entries(problemLeaderBoard.scores).map(([key, score], index) => (
+                        problemLeaderBoard.scores.length !== 0 ? Object.entries(problemLeaderBoard.scores[0]).map(([key, score], index) => (
 
                             <div className={`flex flex-row justify-content-between w-full 
                             ${index % 2 === 0 ? 'bg-primary-500' : 'bg-primary-700'} 
@@ -84,13 +86,13 @@ const ProblemLeaderboard = () => {
                             font-bold
                             p-2`} key={key}>
                                 <div className="px-4 py-2">
-                                    {key}
+                                    {score.Address}
                                 </div>
                                 <div className="px-4 py-2">
                                     {score.Score}
                                 </div>
                             </div>
-                        ))
+                        )) : <></>
                     }
                 </> : (
                     <div className="bg-black-alpha-10 border-round-xl">
