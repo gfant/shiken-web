@@ -45,6 +45,6 @@ export interface ScoreUser {
 }
 
 export interface ProblemLeaderboardData {
-  scores: ScoreData[];
+  scores: ScoreUser[];
   problem: Problem
 }
